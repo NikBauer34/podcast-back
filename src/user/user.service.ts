@@ -20,4 +20,8 @@ export class UserService {
     const user = await this.userModel.findById(_id)
     return user
   }
+  async getAll() {
+    const users = await this.userModel.find({})
+    return users
+  }
 }
