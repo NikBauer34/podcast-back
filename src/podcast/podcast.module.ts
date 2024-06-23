@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PodcastService } from './podcast.service';
 import { PodcastController } from './podcast.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -9,6 +9,7 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [MongooseModule.forFeature([{name: Podcast.name, schema: PodcastSchema}]), JwtModule.register({}), UserModule],
   providers: [PodcastService],
-  controllers: [PodcastController]
+  controllers: [PodcastController],
+  exports: [PodcastService]
 })
 export class PodcastModule {}

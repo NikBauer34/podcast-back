@@ -40,4 +40,21 @@ export class PodcastController {
   getOne(@Param('id') id: string) {
     return this.podcastService.getOne(id)
   }
+  @Get('/get-top')
+  getTopPodcasters() {
+    return this.podcastService.getTopPodcasters()
+  }
+  @Get('/get-most')
+  getMost() {
+    return this.podcastService.getMost()
+  }
+  @Get('/update-views/:id')
+  updateViews(@Param('id') id: Types.ObjectId) {
+    console.log(id)
+    return this.podcastService.updateViews(id)
+  }
+  @Post('/by-user')
+  byUser(@Body() dto: {userId: Types.ObjectId}) {
+    return this.podcastService.getPodcastsByUser(dto.userId)
+  }
 }

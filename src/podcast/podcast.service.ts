@@ -5,6 +5,7 @@ import { Model, Types } from 'mongoose';
 import { CreatePodcastDto } from './dto/CreatePodcast.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
+import { User } from 'src/user/user.model';
 
 @Injectable()
 export class PodcastService {
@@ -65,5 +66,28 @@ export class PodcastService {
     const podcast = await this.podcastModel.findById(id)
     if (!podcast) throw new HttpException('Подкаст не найден', HttpStatus.BAD_REQUEST)
     return podcast
+  }
+  async getTopPodcasters() {
+    const podcasters = await this.userService.getAll()
+    return podcasters
+  }
+  async getMost() {
+    const podcasts = await this.podcastModel.find({})
+      .sort({'views': 'descending'})
+      .limit(5)
+    return podcasts
+  }
+  async updateViews(podcastId: Types.ObjectId) {
+    const podcast = await this.podcastModel.findById(podcastId)
+    podcast.views += 1
+    await podcast.save()
+    console.log(podcast)
+    return podcast
+  }
+  async getPodcastsByUser(userId: Types.ObjectId) {
+    const user = await this.userService.findById(userId)
+    const podcasts = await this.podcastModel.find({})
+      .where('authorId').equals(user._id)
+    return podcasts
   }
 }
