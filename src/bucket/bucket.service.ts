@@ -95,6 +95,7 @@ export class BucketService {
         Authorization: 'Api-Key AQVNxSp8UIr45kqDWFzmOQYwgc2Eh9LnicSjCPqh'
       }
     })
+    console.log(res.data)
     if (!res.data.response) {
       throw new HttpException('Пока изображение не сгенерировалось, повторите через пару секунд', HttpStatus.BAD_REQUEST)
     }

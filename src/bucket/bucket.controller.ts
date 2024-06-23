@@ -36,6 +36,7 @@ uploadFile(@UploadedFile() file: Express.Multer.File) {
 
   @Get('/image/:id')
   getImage(@Param('id') id: string) {
+    console.log(id)
     return this.bucketService.getImage(id)
   }
 }
